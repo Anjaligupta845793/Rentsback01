@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authMiddleware = require("./src/middlewares/auth.js"); // Make sure path is correct
 const updateLockedTokens = require("./src/cron/updateLockedTokens");
+const { swaggerDocs, swaggerUi } = require("./src/config/swagger");
 
 const app = express();
 
@@ -39,6 +40,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
